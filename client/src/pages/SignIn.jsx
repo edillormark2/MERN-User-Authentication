@@ -3,14 +3,21 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
-  const [loading, setLoading] = useState(false);
+  const { loading } = useSelector(state => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     const { id, value } = e.target;
@@ -23,7 +30,7 @@ const SignIn = () => {
       toast.error("Please fill out all fields");
       return;
     }
-    setLoading(true);
+    dispatch(signInStart());
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/signin",
@@ -34,12 +41,12 @@ const SignIn = () => {
           }
         }
       );
-      setLoading(false);
+      dispatch(signInSuccess(response.data));
       // Handle successful sign-in
       toast.success("Logged in successfully");
       navigate("/");
     } catch (error) {
-      setLoading(false);
+      dispatch(signInFailure(error));
       if (error.response && error.response.status === 401) {
         toast.error("Email or password is incorrect");
       } else if (error.response && error.response.status === 404) {
