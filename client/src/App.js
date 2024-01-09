@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import "./App.css";
 import Home from "./pages/Home";
@@ -8,9 +9,21 @@ import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 
+const customToastStyle = {
+  position: "top-right",
+  autoClose: 4000,
+  hideProgressBar: true,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored"
+};
+
 const App = () => {
   return (
     <BrowserRouter>
+      <ToastContainer {...customToastStyle} />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
