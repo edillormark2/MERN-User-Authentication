@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
     profilePicture: {
       type: String,
       default:
-        "https://i.pinimg.com/736x/d4/29/1e/d4291ea760fcbf77ef282cb83ab7127b.jpg"
+        "https://qph.cf2.quoracdn.net/main-qimg-6d72b77c81c9841bd98fc806d702e859-lq"
     }
   },
   { timestamps: true }
