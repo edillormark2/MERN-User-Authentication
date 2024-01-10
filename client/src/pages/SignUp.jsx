@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import OAuth from "../components/OAuth";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -42,7 +43,7 @@ const SignUp = () => {
     } catch (error) {
       setLoading(false);
       if (error.response && error.response.status === 409) {
-        toast.error("Username or email already exists");
+        toast.error("Email already exists");
       } else {
         toast.error("Error submitting data");
       }
@@ -83,6 +84,7 @@ const SignUp = () => {
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
+        <OAuth />
       </form>
       <div className="flex gap-2 mt-5">
         <p>Have an account?</p>
