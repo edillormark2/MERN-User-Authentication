@@ -42,6 +42,7 @@ const SignIn = () => {
           }
         }
       );
+      localStorage.setItem("access_token", response.data.access_token);
       dispatch(signInSuccess(response.data));
       // Handle successful sign-in
       toast.success("Logged in successfully");

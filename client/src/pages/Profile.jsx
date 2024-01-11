@@ -22,6 +22,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const { currentUser, loading } = useSelector(state => state.user);
+  const token = localStorage.getItem("access_token"); // Check here for the stored token
+  console.log("Token:", token);
   const fileRef = useRef(null);
   const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
@@ -78,24 +80,27 @@ const Profile = () => {
         formData,
         {
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`
           }
         }
       );
-
-      const data = res.data;
-      if (!data.success) {
-        dispatch(updateUserFailure(data));
-        return;
+      
+    
+      if (res.status === 201) {
+        dispatch(updateUserSuccess(res.data));
+        toast.success(res.data.message || "Updated successfully");
+      } else {
+        dispatch(updateUserFailure(res.data));
+        toast.error(res.data.message || "Error updating data");
       }
-      dispatch(updateUserSuccess(data));
-      toast.success("Updated successfully");
     } catch (error) {
       console.error("Error:", error);
       dispatch(updateUserFailure(error));
       toast.error("Error updating data");
     }
-  };
+  }    
+
 
   const handleDeleteAccount = async () => {
     try {

@@ -48,18 +48,26 @@ export const signin = async (req, res, next) => {
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
       expiresIn: "1d"
     });
+
     const { password: hashedPassword, ...rest } = validUser._doc;
 
     res
       .cookie("access_token", token, {
         httpOnly: true,
         expires: expiryDate,
-        sameSite: "None", // Set the sameSite attribute
-        secure: process.env.NODE_ENV === "production" // Set secure based on your environment
+        sameSite: "None",
+        secure: process.env.NODE_ENV === "production"
       })
       .status(200)
-      .json(rest);
+      .json({
+        ...rest,
+        access_token: token // Include access_token in the response
+      });
+
+    console.log("User signed in:", validUser.email);
+    console.log("Token set:", token);
   } catch (error) {
+    console.error("Error during sign in:", error);
     next(error);
   }
 };
