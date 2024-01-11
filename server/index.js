@@ -21,12 +21,12 @@ const app = express();
 app.use(
   cors({
     origin: "http://localhost:3001",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
-app.use(express.json());
 
+app.use(express.json());
 app.use(cookieParser());
 
 // Define routes

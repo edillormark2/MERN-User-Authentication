@@ -3,9 +3,11 @@ import { app } from "../firebase";
 import axios from "axios"; // Import Axios
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const OAuth = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleGoogleClick = async () => {
     try {
@@ -25,6 +27,7 @@ const OAuth = () => {
       );
 
       dispatch(signInSuccess(response.data));
+      navigate("/");
     } catch (error) {
       console.log("Could not login with Google", error);
     }
