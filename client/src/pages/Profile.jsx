@@ -9,6 +9,7 @@ import {
 import { app } from "../firebase";
 import axios from "axios";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   updateUserStart,
   updateUserSuccess,
@@ -18,12 +19,11 @@ import {
   deleteUserFailure,
   signOut
 } from "../redux/user/userSlice";
-import "react-toastify/dist/ReactToastify.css";
+
 
 const Profile = () => {
   const { currentUser, loading } = useSelector(state => state.user);
   const token = localStorage.getItem("access_token"); // Check here for the stored token
-  console.log("Token:", token);
   const fileRef = useRef(null);
   const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
@@ -104,10 +104,18 @@ const Profile = () => {
 
   const handleDeleteAccount = async () => {
     try {
+      // Show confirmation dialog to the user
+      const userConfirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+
+      if (!userConfirmed) {
+        // User cancelled the deletion
+        return;
+      }
+
       dispatch(deleteUserStart());
-  
+
       const token = localStorage.getItem('access_token');
-  
+
       const res = await axios.delete(
         `http://localhost:3000/api/user/delete/${currentUser._id}`,
         {
@@ -117,24 +125,27 @@ const Profile = () => {
           },
         }
       );
-  
+
       const data = res.data;
-  
+
       if (data.success === false) {
         dispatch(deleteUserFailure(data));
+        toast.error("Failed to delete account. Please try again.");
         return;
       }
-  
+
       dispatch(deleteUserSuccess(data));
+      toast.success("Account deleted successfully");
     } catch (error) {
       dispatch(deleteUserFailure(error));
+      toast.error("An error occurred while deleting the account. Please try again.");
     }
   };
 
   const handleSignOut = async () => {
     try {
       await axios.get("http://localhost:3000/api/auth/signout");
-      toast.success("Sign out successful");
+  
       dispatch(signOut());
     } catch (error) {
       console.error("Error during sign out:", error);

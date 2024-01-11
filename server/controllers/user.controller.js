@@ -1,9 +1,6 @@
-// controllers/user.controller.js
-
 import { errorHandler } from "../utils/error.js";
 import bcryptjs from "bcryptjs";
 import User from "../models/user.model.js";
-import { verifyToken } from "../utils/verifyUser.js";
 
 export const test = (req, res) => {
   res.json({
