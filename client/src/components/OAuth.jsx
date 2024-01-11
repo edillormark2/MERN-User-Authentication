@@ -9,6 +9,7 @@ const OAuth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Update the frontend code in handleGoogleClick function
   const handleGoogleClick = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -26,7 +27,14 @@ const OAuth = () => {
         }
       );
 
+      // Store the token in localStorage
+      localStorage.setItem("access_token", response.data.access_token);
       dispatch(signInSuccess(response.data));
+
+      // Now, include the token in the headers for subsequent requests
+      const token = localStorage.getItem("access_token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
       navigate("/");
     } catch (error) {
       console.log("Could not login with Google", error);

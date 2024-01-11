@@ -105,14 +105,26 @@ const Profile = () => {
   const handleDeleteAccount = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`http://localhost:3000/api/user/delete/${currentUser._id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
+  
+      const token = localStorage.getItem('access_token');
+  
+      const res = await axios.delete(
+        `http://localhost:3000/api/user/delete/${currentUser._id}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`
+          },
+        }
+      );
+  
+      const data = res.data;
+  
       if (data.success === false) {
         dispatch(deleteUserFailure(data));
         return;
       }
+  
       dispatch(deleteUserSuccess(data));
     } catch (error) {
       dispatch(deleteUserFailure(error));
