@@ -22,10 +22,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run install && react-scripts build",
+    "install": "npm install",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
+  },  
   "eslintConfig": {
     "extends": [
       "react-app",
