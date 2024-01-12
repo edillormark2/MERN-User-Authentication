@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import helmet from "helmet";
+import express from "express";
 
 dotenv.config();
 
