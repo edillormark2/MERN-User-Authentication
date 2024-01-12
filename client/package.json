@@ -22,23 +22,17 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run install && react-scripts build",
-    "install": "npm install",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },  
+    "eject": "react-scripts eject",
+    "install-client": "npm install",
+    "build-client": "react-scripts build"
+  },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
