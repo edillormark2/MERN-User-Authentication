@@ -28,12 +28,21 @@ const SignUp = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
+
     try {
       if (!formData.username || !formData.email || !formData.password) {
         setLoading(false);
         toast.error("Please fill out all fields");
         return;
       }
+
+      // Validate password length
+      if (formData.password.length < 8) {
+        setLoading(false);
+        toast.error("Password must be at least 8 characters long");
+        return;
+      }
+
       const response = await axios.post(
         "http://localhost:3000/api/auth/signup",
         formData,
@@ -58,7 +67,7 @@ const SignUp = () => {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <div className="dark:bg-secondary-dark-bg bg-white drop-shadow-xl p-6 mt-10 m-4 rounded-lg">
+      <div className="dark:bg-secondary-dark-bg bg-white drop-shadow-xl p-6 mt-20 m-4 rounded-lg">
         <h1 className=" dark:text-gray-200 text-2xl sm:text-3xl text-center font-semibold mb-7">
           Sign Up
         </h1>
