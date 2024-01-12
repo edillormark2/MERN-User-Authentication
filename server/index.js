@@ -10,22 +10,24 @@ import helmet from "helmet";
 
 dotenv.config();
 
-const __dirname = path.resolve();
-const absolutePath = path.join(__dirname, "client", "build");
-
 mongoose
-  .connect(process.env.MONGO, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(process.env.MONGO)
   .then(() => {
     console.log("Connected to MongoDB");
   })
   .catch(err => {
-    console.error("MongoDB connection error:", err);
+    console.log(err);
   });
 
+const __dirname = path.resolve();
+
 const app = express();
+
+app.use(express.static(path.join(__dirname, "client", "build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 // Middleware
 app.use(helmet());
@@ -39,17 +41,13 @@ app.use(
   })
 );
 
-// ... (existing routes)
-
-// Static File Serving
-app.use(express.static(path.join(__dirname, "client", "build")));
-
-// Serve React App for all other routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+app.listen(3000, () => {
+  console.log("Server listening on port 3000");
 });
 
-// Error handler middleware
+app.use("/api/user", userRoutes);
+app.use("/api/auth", authRoutes);
+
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
@@ -58,9 +56,4 @@ app.use((err, req, res, next) => {
     message,
     statusCode
   });
-});
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
 });
