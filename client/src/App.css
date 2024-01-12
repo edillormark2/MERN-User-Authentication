@@ -30,3 +30,9 @@
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
 }
+
+@media screen and (max-width: 768px) {
+  .header {
+    z-index: 10000000;
+  }
+}

@@ -58,8 +58,8 @@ const SignUp = () => {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <div className="bg-white drop-shadow-xl p-6 mt-10 m-4">
-        <h1 className="text-2xl sm:text-3xl text-center font-semibold mb-7">
+      <div className="dark:bg-secondary-dark-bg bg-white drop-shadow-xl p-6 mt-10 m-4 rounded-lg">
+        <h1 className=" dark:text-gray-200 text-2xl sm:text-3xl text-center font-semibold mb-7">
           Sign Up
         </h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -67,7 +67,7 @@ const SignUp = () => {
             type="text"
             placeholder="Username"
             id="username"
-            className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 text-sm sm:text-base"
+            className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 text-sm sm:text-base dark:bg-half-transparent dark:text-gray-200"
             onChange={handleChange}
             value={formData.username}
           />
@@ -75,7 +75,7 @@ const SignUp = () => {
             type="email"
             placeholder="Email"
             id="email"
-            className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 text-sm sm:text-base"
+            className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 text-sm sm:text-base dark:bg-half-transparent dark:text-gray-200"
             onChange={handleChange}
             value={formData.email}
           />
@@ -84,7 +84,7 @@ const SignUp = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               id="password"
-              className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base"
+              className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base dark:bg-half-transparent dark:text-gray-200"
               onChange={handleChange}
               value={formData.password}
             />
@@ -105,7 +105,7 @@ const SignUp = () => {
           </button>
           <OAuth />
         </form>
-        <div className="flex gap-2 mt-5 text-sm sm:text-base">
+        <div className="flex gap-2 mt-5 text-sm sm:text-base dark:text-gray-200">
           <p>Have an account?</p>
           <Link to="/sign-in">
             <span className="text-blue-500">Sign in</span>

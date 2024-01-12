@@ -1,27 +1,39 @@
 import React from "react";
+import { useStateContext } from "../redux/ContextProvider";
 
-export default function About() {
+export default function Home() {
+  const { currentMode } = useStateContext();
   return (
     <div className="px-4 py-12 max-w-2xl mx-auto">
-      <h1 className="text-xl sm:text-3xl font-bold  mb-4 text-slate-800">
+      <h1 className="dark:text-gray-200 text-xl sm:text-3xl font-bold mb-4 text-slate-800">
         About
       </h1>
-      <div className="bg-gray-50 drop-shadow-lg p-4 rounded-lg">
-        <p className="mt-2 m-2 text-slate-700 text-sm sm:text-base">
-          This is a MERN (MongoDB, Express, React, Node.js) stack application
-          with authentication. It allows users to sign up, log in, and log out,
-          and provides access to protected routes only for authenticated users.
+      <div className="bg-gray-50 dark:bg-secondary-dark-bg drop-shadow-lg p-4 rounded-lg">
+        <p className="dark:text-gray-200 mt-2 m-2 text-slate-700 text-sm sm:text-base">
+          Welcome to my personal web project! This application is a result of my
+          passion for creating user-friendly web experiences.
         </p>
-        <p className="mt-2 m-2 text-slate-700 text-sm sm:text-base">
-          The front-end of the application is built with React and uses React
-          Router for client-side routing. The back-end is built with Node.js and
-          Express, and uses MongoDB as the database. Authentication is
-          implemented using JSON Web Tokens (JWT).
+        <p className="dark:text-gray-200 mt-2 m-2 text-slate-700 text-sm sm:text-base">
+          Using the MERN (MongoDB, Express, React, Node.js) stack, I've crafted
+          a simple yet powerful platform. It allows easy sign-up, log-in, and
+          log-out, emphasizing a smooth and responsive user interface. With
+          React on the front-end and efficient client-side routing, navigation
+          is a breeze.
         </p>
-        <p className="mt-2 m-2 text-slate-700 text-sm sm:text-base">
-          This application is intended as a starting point for building
-          full-stack web applications with authentication using the MERN stack.
-          Feel free to use it as a template for your own projects!
+        <p className="dark:text-gray-200 mt-2 m-2 text-slate-700 text-sm sm:text-base">
+          Behind the scenes, Node.js, Express, and MongoDB work together to
+          ensure secure data handling. User authentication is implemented with
+          JSON Web Tokens (JWT) for an extra layer of protection. This project
+          is a reflection of my dedication to making web development accessible.
+          Feel free to explore and use it as inspiration for your own projects!
+        </p>
+        <p className="dark:text-gray-200 mt-2 m-2 text-slate-700 text-sm sm:text-base">
+          In the development of this project, I leveraged powerful tools like
+          Visual Studio Code for efficient coding and GitHub for version control
+          and collaboration. Firebase served as the backend for user
+          authentication, while MongoDB Atlas provided a cloud-based database
+          solution. For hosting, the application is deployed on Render, ensuring
+          a reliable and scalable environment.
         </p>
       </div>
     </div>

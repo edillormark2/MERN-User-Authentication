@@ -144,18 +144,23 @@ const Profile = () => {
 
   const handleSignOut = async () => {
     try {
-      await axios.get("http://localhost:3000/api/auth/signout");
-  
-      dispatch(signOut());
+      const confirmSignOut = window.confirm("Are you sure you want to sign out?");
+      
+      if (confirmSignOut) {
+        await axios.get("http://localhost:3000/api/auth/signout");
+        dispatch(signOut());
+      }
     } catch (error) {
       console.error("Error during sign out:", error);
       toast.error("Error during sign out");
     }
   };
   
+  
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
+        <div className="dark:bg-secondary-dark-bg bg-white drop-shadow-xl p-6 mt-10 m-4 rounded-lg">
+    
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="file"
@@ -170,7 +175,7 @@ const Profile = () => {
             (currentUser && currentUser.profilePicture)
           }
           alt="profile"
-          className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2 "
+          className="h-28 w-28 self-center cursor-pointer rounded-full object-cover mt-2 "
           onClick={() => fileRef.current.click()}
         />
 
@@ -192,7 +197,7 @@ const Profile = () => {
           type="text"
           id="username"
           placeholder="Username"
-          className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base"
+          className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base dark:bg-half-transparent dark:text-gray-200"
           onChange={handleChange}
         />
 
@@ -201,30 +206,31 @@ const Profile = () => {
           type="email"
           id="email"
           placeholder="Email"
-          className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base"
+          className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base dark:bg-half-transparent dark:text-gray-200"
           onChange={handleChange}
         />
         <input
           type="password"
           id="password"
           placeholder="Password"
-          className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base"
+          className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base dark:bg-half-transparent dark:text-gray-200"
           onChange={handleChange}
         />
         <button className="bg-blue-600 text-white p-3 rounded-lg  hover:opacity-85 disabled:opacity-80 text-sm sm:text-base">
           {loading ? "Loading..." : "Update"}
         </button>
       </form>
-      <div className="flex justify-between mt-5">
+      <div className="flex justify-between mt-16">
         <span
           onClick={handleDeleteAccount}
-          className="text-red-700 cursor-pointer"
+          className="text-red-700 dark:bg-main-dark-bg cursor-pointer bg-white bg-opacity-50 p-2 rounded-xl font-bold text-sm sm:text-base"
         >
           Delete Account
         </span>
-        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
+        <span onClick={handleSignOut} className="text-red-700 dark:bg-main-dark-bg cursor-pointer bg-white bg-opacity-50 p-2 rounded-xl font-bold text-sm sm:text-base">
           Sign out
         </span>
+      </div>
       </div>
     </div>
   );
