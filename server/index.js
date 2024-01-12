@@ -7,20 +7,22 @@ import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import helmet from "helmet";
-import express from "express";
 
 dotenv.config();
 
 const __dirname = path.resolve();
-const absolutePath = path.join(__dirname, "client", "build"); // Updated to "build" instead of "dist"
+const absolutePath = path.join(__dirname, "client", "build");
 
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
   .catch(err => {
-    console.log(err);
+    console.error("MongoDB connection error:", err);
   });
 
 const app = express();
@@ -31,15 +33,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: process.env.CORS_ORIGIN || "http://localhost:3001",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
 
-// Define routes
-app.use("/api/user", userRoutes);
-app.use("/api/auth", authRoutes);
+// ... (existing routes)
 
 // Static File Serving
 app.use(express.static(absolutePath));
