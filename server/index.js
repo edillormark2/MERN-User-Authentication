@@ -11,7 +11,7 @@ import helmet from "helmet";
 dotenv.config();
 
 const __dirname = path.resolve();
-const absolutePath = path.join(__dirname, "client", "dist");
+const absolutePath = path.join(__dirname, "client", "build"); // Updated to "build" instead of "dist"
 
 mongoose
   .connect(process.env.MONGO)
