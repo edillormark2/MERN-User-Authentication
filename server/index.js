@@ -42,11 +42,11 @@ app.use(
 // ... (existing routes)
 
 // Static File Serving
-app.use(express.static(absolutePath));
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 // Serve React App for all other routes
 app.get("*", (req, res) => {
-  res.sendFile(path.join(absolutePath, "index.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 // Error handler middleware
