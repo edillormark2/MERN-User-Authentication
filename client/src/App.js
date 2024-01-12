@@ -9,6 +9,8 @@ import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
+import Footer from "./components/Footer";
+import { useStateContext } from "./redux/ContextProvider";
 
 const customToastStyle = {
   position: "top-right",
@@ -22,20 +24,27 @@ const customToastStyle = {
 };
 
 const App = () => {
+  const { currentMode } = useStateContext();
+
   return (
-    <BrowserRouter>
-      <ToastContainer {...customToastStyle} />
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/profile" element={<Profile />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <div className={currentMode === "Dark" ? "dark" : ""}>
+      <div className="dark:bg-secondary-dark-bg  ">
+        <BrowserRouter>
+          <ToastContainer {...customToastStyle} />
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+        <Footer />
+      </div>
+    </div>
   );
 };
 

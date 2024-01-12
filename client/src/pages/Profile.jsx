@@ -192,7 +192,7 @@ const Profile = () => {
           type="text"
           id="username"
           placeholder="Username"
-          className="bg-slate-100 rounded-lg p-3"
+          className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base"
           onChange={handleChange}
         />
 
@@ -201,17 +201,17 @@ const Profile = () => {
           type="email"
           id="email"
           placeholder="Email"
-          className="bg-slate-100 rounded-lg p-3"
+          className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base"
           onChange={handleChange}
         />
         <input
           type="password"
           id="password"
           placeholder="Password"
-          className="bg-slate-100 rounded-lg p-3"
+          className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base"
           onChange={handleChange}
         />
-        <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-80">
+        <button className="bg-blue-600 text-white p-3 rounded-lg  hover:opacity-85 disabled:opacity-80 text-sm sm:text-base">
           {loading ? "Loading..." : "Update"}
         </button>
       </form>

@@ -4,6 +4,7 @@ import axios from "axios"; // Import Axios
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { FaGoogle } from "react-icons/fa";
 
 const OAuth = () => {
   const dispatch = useDispatch();
@@ -45,9 +46,10 @@ const OAuth = () => {
     <button
       type="button"
       onClick={handleGoogleClick}
-      className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95"
+      className="bg-red-700 text-white p-3 rounded-lg flex items-center justify-center gap-4 hover:opacity-80 text-sm sm:text-base"
     >
-      Continue with Google
+      <FaGoogle />
+      <span>Sign in with Google</span>
     </button>
   );
 };

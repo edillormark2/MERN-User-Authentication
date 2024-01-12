@@ -1,24 +1,59 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { FiSun, FiMoon } from "react-icons/fi";
+import { useStateContext } from "../redux/ContextProvider";
 
 const Header = () => {
   const { currentUser } = useSelector(state => state.user);
+  const [menuClicked, setMenuClicked] = useState(""); // State for active menu
+  const [isDarkTheme, setIsDarkTheme] = useState(false); // State for dark/light theme
+  const { setMode, currentMode } = useStateContext();
+
+  const handleMenuClick = menu => {
+    setMenuClicked(menu);
+  };
+
+  const toggleTheme = () => {
+    setMode({ target: { value: currentMode === "Light" ? "Dark" : "Light" } });
+  };
+
   return (
-    <div className="bg-slate-200">
+    <div
+      className={`bg-white drop-shadow-xl ${currentMode === "Dark"
+        ? "Dark"
+        : ""}`}
+    >
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
-        <Link to="/">
-          <h1 className="font-bold">Auth App</h1>
-        </Link>
+        <h1 className="font-bold text-lg sm:text-sm xl:text-lg">Auth App</h1>
+
         <ul className="flex gap-4 items-center">
-          <Link to="/">
-            <li>Home</li>
+          <Link to="/" onClick={() => handleMenuClick("home")}>
+            <li
+              className={`dark:hover:text-black ${menuClicked === "home"
+                ? "bg-gray-300"
+                : "hover:bg-gray-200"} p-2 sm:p-3 rounded-full text-sm sm:text-base`}
+            >
+              Home
+            </li>
           </Link>
-          <Link to="/about">
-            <li>About</li>
+          <Link to="/about" onClick={() => handleMenuClick("about")}>
+            <li
+              className={`dark:hover:text-black ${menuClicked === "about"
+                ? "bg-gray-300"
+                : "hover:bg-gray-200"} p-2 sm:p-3 rounded-full text-sm sm:text-base`}
+            >
+              About
+            </li>
           </Link>
           <Link to="/profile">
             {currentUser
-              ? <div className="flex items-center">
+              ? <div
+                  className={`flex items-center ${menuClicked === "profile"
+                    ? "bg-gray-300 "
+                    : "hover:bg-gray-200"} p-1 sm:p-2 rounded-full text-sm sm:text-base`}
+                  onClick={() => handleMenuClick("profile")}
+                >
                   <img
                     src={currentUser.profilePicture}
                     alt="profile"
@@ -28,8 +63,23 @@ const Header = () => {
                     {currentUser.username}
                   </p>
                 </div>
-              : <li>Sign In</li>}
+              : <li
+                  className={`dark:hover:text-black ${menuClicked === "signin"
+                    ? "bg-gray-300"
+                    : "hover:bg-gray-200"} p-2 sm:p-3 rounded-full text-sm sm:text-base`}
+                  onClick={() => handleMenuClick("signin")}
+                >
+                  Sign In
+                </li>}
           </Link>
+          <div
+            className="flex items-center cursor-pointer bg-gray-200 p-2 rounded-xl"
+            onClick={toggleTheme}
+          >
+            {currentMode === "Dark"
+              ? <FiMoon size={20} />
+              : <FiSun size={20} />}
+          </div>
         </ul>
       </div>
     </div>

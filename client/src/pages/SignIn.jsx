@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -10,8 +11,14 @@ import {
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import OAuth from "../components/OAuth";
+import "../App.css";
 
 const SignIn = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -65,37 +72,51 @@ const SignIn = () => {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="email"
-          placeholder="Email"
-          id="email"
-          className="bg-slate-100 p-3 rounded-lg"
-          onChange={handleChange}
-          value={formData.email}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          className="bg-slate-100 p-3 rounded-lg"
-          onChange={handleChange}
-          value={formData.password}
-        />
-        <button
-          disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-        >
-          {loading ? "Loading..." : "Sign In"}
-        </button>
-        <OAuth />
-      </form>
-      <div className="flex gap-2 mt-5">
-        <p>Don't Have an account?</p>
-        <Link to="/sign-up">
-          <span className="text-blue-500">Sign up</span>
-        </Link>
+      <div className="bg-white drop-shadow-xl p-6 mt-10 m-4">
+        <h1 className="text-2xl sm:text-3xl text-center font-semibold mb-7">
+          Sign In
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input
+            type="email"
+            placeholder="Email"
+            id="email"
+            className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 text-sm sm:text-base"
+            onChange={handleChange}
+            value={formData.email}
+          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              id="password"
+              className="form-control bg-slate-50 p-3 rounded-lg border border-gray-300 pr-10 text-sm sm:text-base"
+              onChange={handleChange}
+              value={formData.password}
+            />
+            <div
+              className="absolute inset-y-0 right-2 flex items-center pr-2 cursor-pointer text-gray-500 "
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword
+                ? <AiFillEye size={23} />
+                : <AiFillEyeInvisible size={23} />}
+            </div>
+          </div>
+          <button
+            disabled={loading}
+            className="bg-blue-600 text-white p-3 rounded-lg  hover:opacity-85 disabled:opacity-80 text-sm sm:text-base"
+          >
+            {loading ? "Loading..." : "Sign In"}
+          </button>
+          <OAuth />
+        </form>
+        <div className="flex gap-2 mt-5 text-sm sm:text-base">
+          <p>Don't Have an account?</p>
+          <Link to="/sign-up">
+            <span className="text-blue-500">Sign up</span>
+          </Link>
+        </div>
       </div>
     </div>
   );
