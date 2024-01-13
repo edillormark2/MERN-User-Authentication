@@ -11,8 +11,7 @@ server/node_modules
 coverage/
 
 # production
-
-
+client/build
 # misc
 server/.env
 client/.env

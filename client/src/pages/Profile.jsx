@@ -37,6 +37,28 @@ const Profile = () => {
   const [isDataChanged, setIsDataChanged] = useState(false); // New state to track changes
   const dispatch = useDispatch();
 
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/user/user/${currentUser._id}`);
+      setFormData({
+        ...formData,
+        username: response.data.username,
+        email: response.data.email,
+      });
+    } catch (error) {
+      console.error("Error fetching user data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const handleUserUpdated = () => {
+    // Callback function to refresh user data after updating the user
+    fetchUserData();
+  };
+
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
@@ -48,22 +70,27 @@ const Profile = () => {
     const fileName = new Date().getTime() + newImage.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, newImage);
-
+  
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setImagePercent(Math.round(progress));
       },
       () => {
         setImageError(true);
       },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setFormData({ ...formData, profilePicture: downloadURL });
-          setIsImageChanged(true); // Set isImageChanged to true when image is uploaded
-        });
+      async () => {
+        try {
+          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setFormData({ ...formData, profilePicture: downloadURL });
+            setIsImageChanged(true); // Set isImageChanged to true when the image is uploaded
+          });
+  
+          
+        } catch (error) {
+          console.error("Error updating profile picture: ", error);
+        }
       }
     );
   };
@@ -114,6 +141,7 @@ const Profile = () => {
       if (res.status === 201) {
         dispatch(updateUserSuccess(res.data));
         toast.success(res.data.message || "Updated successfully");
+        await fetchUserData();
       } else {
         dispatch(updateUserFailure(res.data));
         toast.error(res.data.message || "Error updating data");
@@ -170,12 +198,16 @@ const Profile = () => {
       const confirmSignOut = window.confirm("Are you sure you want to sign out?");
       
       if (confirmSignOut) {
-        await axios.get("http://localhost:3000/api/auth/signout");
+        await fetch('http://localhost:3000/api/auth/signout', {
+          method: 'GET',
+          mode: 'cors',
+          credentials: 'include', // Include credentials (cookies)
+        });
+    
         dispatch(signOut());
       }
     } catch (error) {
-      console.error("Error during sign out:", error);
-      toast.error("Error during sign out");
+      console.log(error);
     }
   };
   
@@ -192,14 +224,17 @@ const Profile = () => {
           onChange={(e) => setImage(e.target.files[0])}
         />
         <img
-          src={
-            formData.profilePicture ||
-            (currentUser && currentUser.profilePicture)
-          }
-          alt="profile"
-          className="h-28 w-28 self-center cursor-pointer rounded-full object-cover mt-2"
-          onClick={() => fileRef.current.click()}
-        />
+  src={
+    formData.profilePicture ?
+      `${formData.profilePicture}?${Math.random()}` :
+      (currentUser && currentUser.profilePicture)
+  }
+  alt="profile"
+  className="h-28 w-28 self-center cursor-pointer rounded-full object-cover mt-2"
+  onClick={() => fileRef.current.click()}
+  key={formData.profilePicture || Math.random()} // Change the key dynamically
+/>
+
   
         <p className="text-sm self-center mt-4">
           {imageError ? (

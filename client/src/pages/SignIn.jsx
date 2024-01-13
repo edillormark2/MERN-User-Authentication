@@ -39,10 +39,6 @@ const SignIn = () => {
       return;
     }
     dispatch(signInStart());
-
-    // Log formData just before making the request
-    console.log(formData);
-
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/signin",

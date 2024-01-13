@@ -8,6 +8,7 @@ export const test = (req, res) => {
   });
 };
 
+//Updating user profile
 export const updateUser = async (req, res, next) => {
   try {
     if (req.user.id !== req.params.id) {
@@ -46,6 +47,7 @@ export const updateUser = async (req, res, next) => {
   }
 };
 
+//Deleting User Account
 export const deleteUser = async (req, res, next) => {
   if (req.user.id !== req.params.id) {
     return next(errorHandler(401, "You can delete only your account"));
@@ -53,6 +55,22 @@ export const deleteUser = async (req, res, next) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json("User hasn been deleted...");
+  } catch (error) {
+    next(error);
+  }
+};
+
+//Fetching user data
+export const getUserData = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { password, ...userData } = user._doc;
+    res.status(200).json(userData);
   } catch (error) {
     next(error);
   }

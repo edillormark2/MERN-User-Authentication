@@ -18,21 +18,15 @@ mongoose
     console.log(err);
   });
 
-const __dirname = path.resolve();//error in signout
+const __dirname = path.resolve();
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "/client/build")));//error in signout
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));//error in signout
-});
-
 app.use(
   cors({
-    origin: "https://mern-auth-6cal.onrender.com",
+    origin: "http://localhost:3001",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    credentials: true
   })
 );
 
@@ -41,6 +35,12 @@ app.use(cookieParser());
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 // Error handler middleware
 app.use((err, req, res, next) => {
@@ -52,6 +52,7 @@ app.use((err, req, res, next) => {
     statusCode
   });
 });
+
 // Start the server
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
