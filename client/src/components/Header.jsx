@@ -31,7 +31,7 @@ const Header = () => {
         <ul className="flex gap-4 items-center ml-auto">
           {currentUser && (
             <>
-              <Link to="/home" onClick={() => handleMenuClick("home")}>
+              <Link to="/" onClick={() => handleMenuClick("home")}>
                 <li
                   className={`dark:hover:text-black ${menuClicked === "home"
                     ? "bg-gray-300 dark:text-gray-800"

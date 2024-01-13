@@ -53,7 +53,7 @@ const SignIn = () => {
       dispatch(signInSuccess(response.data));
       // Handle successful sign-in
       toast.success("Logged in successfully");
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       dispatch(signInFailure(error));
       if (error.response && error.response.status === 401) {
