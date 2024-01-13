@@ -23,8 +23,9 @@ const __dirname = path.resolve();
 
 const app = express();
 
+// Serve React App for all other routes
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "public", "index.html"));
+  res.sendFile(path.join(process.cwd(), "client", "public", "index.html"));
 });
 
 // Middleware
