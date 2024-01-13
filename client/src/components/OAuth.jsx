@@ -36,7 +36,7 @@ const OAuth = () => {
       const token = localStorage.getItem("access_token");
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.log("Could not login with Google", error);
     }
