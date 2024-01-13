@@ -6,23 +6,8 @@ import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
-import helmet from "helmet";
 
 dotenv.config();
-
-const __dirname = path.resolve();
-
-const app = express();
-
-// Static File Serving (only in production)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client", "build")));
-
-  // Serve React App for all other routes
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-  });
-}
 
 mongoose
   .connect(process.env.MONGO, {
@@ -37,13 +22,22 @@ mongoose
     console.error("MongoDB connection error:", err);
   });
 
-// Middleware
-app.use(helmet());
+const __dirname = path.resolve();
+
+const app = express();
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
+
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3001",
+    origin: "http://localhost:3001",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
   })
