@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthRedirect from "./components/AuthRedirect";
+import NotFound from "./components/NotFound";
 import Footer from "./components/Footer";
 import { useStateContext } from "./redux/ContextProvider";
 
@@ -36,7 +37,7 @@ const App = () => {
           <main className="flex-grow bg-gray-100 dark:bg-main-dark-bg">
             <Routes>
               <Route path="/" element={<PrivateRoute />}>
-                <Route path="/" element={<Home />} />
+                <Route index element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/profile" element={<Profile />} />
               </Route>
@@ -48,6 +49,7 @@ const App = () => {
                 path="/sign-in"
                 element={<AuthRedirect element={<SignIn />} />}
               />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <Footer />
