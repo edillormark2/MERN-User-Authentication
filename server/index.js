@@ -10,30 +10,23 @@ import path from "path";
 dotenv.config();
 
 mongoose
-  .connect(process.env.MONGO, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true // Add this line
-  })
+  .connect(process.env.MONGO)
   .then(() => {
     console.log("Connected to MongoDB");
   })
   .catch(err => {
-    console.error("MongoDB connection error:", err);
+    console.log(err);
   });
 
-const __dirname = path.resolve();
+const __dirname = path.resolve();//error in signout
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, "/client/build")));//error in signout
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));//error in signout
 });
-
-app.use(express.json());
-app.use(cookieParser());
 
 app.use(
   cors({
@@ -42,6 +35,9 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
+
+app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
@@ -56,8 +52,7 @@ app.use((err, req, res, next) => {
     statusCode
   });
 });
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+// Start the server
+app.listen(3000, () => {
+  console.log("Server listening on port 3000");
 });
