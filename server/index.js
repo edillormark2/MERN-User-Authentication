@@ -30,7 +30,7 @@ app.get("*", (req, res) => {
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
   })
