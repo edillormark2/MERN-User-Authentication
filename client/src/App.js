@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
+import AuthRedirect from "./components/AuthRedirect";
 import Footer from "./components/Footer";
 import { useStateContext } from "./redux/ContextProvider";
 
@@ -39,8 +40,14 @@ const App = () => {
                 <Route path="/about" element={<About />} />
                 <Route path="/profile" element={<Profile />} />
               </Route>
-              <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/sign-in" element={<SignIn />} />
+              <Route
+                path="/sign-up"
+                element={<AuthRedirect element={<SignUp />} />}
+              />
+              <Route
+                path="/sign-in"
+                element={<AuthRedirect element={<SignIn />} />}
+              />
             </Routes>
           </main>
           <Footer />
