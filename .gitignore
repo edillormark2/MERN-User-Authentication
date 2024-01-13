@@ -12,6 +12,8 @@ coverage/
 
 # production
 client/build
+
+
 # misc
 server/.env
 client/.env

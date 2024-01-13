@@ -44,7 +44,7 @@ const SignUp = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:3000/api/auth/signup",
+        "https://mern-auth-6cal.onrender.com/api/auth/signup",
         formData,
         {
           headers: {

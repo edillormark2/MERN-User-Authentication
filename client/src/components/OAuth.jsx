@@ -20,7 +20,7 @@ const OAuth = () => {
 
       // Use Axios for API request
       const response = await axios.post(
-        "http://localhost:3000/api/auth/google",
+        "https://mern-auth-6cal.onrender.com/api/auth/google",
         {
           name: result.user.displayName,
           email: result.user.email,
