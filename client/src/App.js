@@ -34,10 +34,10 @@ const App = () => {
           <Header />
           <main className="flex-grow bg-gray-100 dark:bg-main-dark-bg">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/" element={<SignUp />} />
               <Route path="/sign-in" element={<SignIn />} />
-              <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/about" element={<About />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/profile" element={<Profile />} />
               </Route>
