@@ -24,7 +24,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: "https://mern-auth-6cal.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   })
@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
