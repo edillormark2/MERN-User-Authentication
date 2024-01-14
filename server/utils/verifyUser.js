@@ -5,15 +5,20 @@ import { errorHandler } from "./error.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-// utils/verifyUser.js
-
 export const verifyToken = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    console.log("Received Token:", token); // Log the received token
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Check if the token is expired
+    const isTokenExpired = new Date(decodedToken.exp * 1000) < new Date();
+
+    if (isTokenExpired) {
+      console.error("Token has expired");
+      return res.redirect("/sign-in"); // Redirect to the sign-in page
+    }
+
     req.user = decodedToken;
-    console.log("Decoded Token:", decodedToken);
     next();
   } catch (error) {
     console.error("Token Verification Error:", error);

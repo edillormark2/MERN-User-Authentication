@@ -64,11 +64,14 @@ export const signin = async (req, res, next) => {
         access_token: token // Include access_token in the response
       });
   } catch (error) {
+    // Handle token expiration
+    if (error.name === "TokenExpiredError") {
+      return res.redirect("/sign-in"); // Redirect to the sign-in page
+    }
     next(error);
   }
 };
 
-// Google authentication route
 export const google = async (req, res, next) => {
   try {
     const { email, name, photo } = req.body;
@@ -103,6 +106,10 @@ export const google = async (req, res, next) => {
     // Send the token in the response
     sendTokenResponse(newUser, token, res);
   } catch (error) {
+    // Handle token expiration
+    if (error.name === "TokenExpiredError") {
+      return res.redirect("/sign-in"); // Redirect to the sign-in page
+    }
     next(error);
   }
 };

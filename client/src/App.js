@@ -38,6 +38,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<PrivateRoute />}>
                 <Route index element={<Home />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/profile" element={<Profile />} />
               </Route>
