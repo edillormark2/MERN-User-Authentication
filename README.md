@@ -9,7 +9,7 @@
 
 - User Authentication:
 Easy sign-up, log-in, and log-out functionalities.
-Seamless sign-in using Google account.
+Seamless sign-in using a Google account.
 - User Profile: Update user data, Delete account, Sign out.
 - Responsive UI: Crafted with React for a smooth and responsive user interface.
 - Secure Data Handling: Node.js, Express, and MongoDB work together to ensure secure data handling.
@@ -20,15 +20,15 @@ Seamless sign-in using Google account.
 - Backend: Node.js and Express.
 - Database: MongoDB, with MongoDB Atlas as the cloud-based solution.
 - Authentication: JSON Web Tokens (JWT) for an extra layer of protection.
-- Google Sign-In: Seamlessly sign in using Google account.
+- Google Sign-In: Seamlessly sign in using a Google account.
   
 ## Development Tools
 - IDE: Visual Studio Code.
 - Version Control: GitHub for efficient version control.
   
 ## Deployment
-- Firebase: serves as the backend for user authentication and store images.
-= Database: MongoDB Atlas for cloud-based database solutions.
+- Firebase: serves as the backend for user authentication and storing images.
+- Database: MongoDB Atlas for cloud-based database solutions.
 - Hosting: Render provides a reliable and scalable environment for deploying the application.
 
 ## License
