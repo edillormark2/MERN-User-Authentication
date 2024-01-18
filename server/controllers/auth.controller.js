@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -108,7 +109,7 @@ export const google = async (req, res, next) => {
   } catch (error) {
     // Handle token expiration
     if (error.name === "TokenExpiredError") {
-      return res.redirect("/sign-in"); // Redirect to the sign-in page
+      return res.redirect("/signin"); // Redirect to the sign-in page
     }
     next(error);
   }

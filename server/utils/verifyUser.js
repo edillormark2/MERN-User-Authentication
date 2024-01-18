@@ -15,7 +15,7 @@ export const verifyToken = (req, res, next) => {
 
     if (isTokenExpired) {
       console.error("Token has expired");
-      return res.redirect("/sign-in"); // Redirect to the sign-in page
+      return res.redirect("/signin"); // Redirect to the sign-in page
     }
 
     req.user = decodedToken;
